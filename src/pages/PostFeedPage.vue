@@ -10,11 +10,28 @@
 </template>
 
 <script setup lang="ts">
-import NewPostField from 'components/HomePage/NewPostField.vue';
+import NewPostField from 'components/PostFeedPage/NewPostField.vue';
 import {PostModel} from 'components/models';
-import PostList from 'components/HomePage/PostList.vue';
+import PostList from 'components/PostFeedPage/PostList.vue';
+import {onMounted, ref} from "vue";
+import {usePostsStore} from "stores/PostStore";
 
-const posts: PostModel[] = [
+const postsStore = usePostsStore();
+onMounted(async () => {
+  getPosts();
+});
+
+const getPosts = async () => {
+  const posts = await postsStore.getPosts();
+
+  if ('error' in posts) {
+    console.warn('Error loading posts');
+    return;
+  }
+
+};
+
+const posts = ref<PostModel[]>([
   {
     id: 1,
     text: 'first post, new, just posted',
@@ -71,8 +88,7 @@ const posts: PostModel[] = [
     author_tag: 'hgg',
     liked: false
   },
-
-]
+]);
 
 // const fetchDate = await fetch('/api/posts');
 </script>

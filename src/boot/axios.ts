@@ -14,7 +14,7 @@ declare module '@vue/runtime-core' {
 // "export default () => {}" function below (which runs individually
 // for each client)
 //todo: edit baseURL
-const baseURL = '/localhost:8080/api';
+const baseURL = 'http:/localhost:8080/api';
 
 export const axiosConfig: AxiosRequestConfig = {
   withCredentials: true,

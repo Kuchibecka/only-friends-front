@@ -23,8 +23,39 @@ export const usePostsStore = defineStore('postsStore', () => {
     return res;
   }
 
+  const newPost = async (postData) => {
+    getPostsState.value = 'loading';
+    const res = await PostsService.newPost(postData);
+    if ('error' in res) {
+      getPostsState.value = 'error';
+    } else {
+      getPostsState.value = 'success';
+
+      //todo: ???
+      // postList.value?.push(new PostModel())
+    }
+  }
+
+  //todo: param === id?
+  const deletePost = async (postData) => {
+    getPostsState.value = 'loading';
+    const res = await PostsService.deletePost(postData);
+    if ('error' in res) {
+      getPostsState.value = 'error';
+    } else {
+      getPostsState.value = 'success';
+
+      //todo: ???
+      const index = postList.value?.indexOf(postData)
+      if (index > -1) {
+        postList.value?.slice(index, 1);
+      }
+    }
+  }
+
   return {
     getPostsState,
-    getPosts
+    getPosts,
+    newPost
   };
 });

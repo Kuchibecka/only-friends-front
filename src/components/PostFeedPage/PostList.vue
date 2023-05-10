@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import SinglePost from 'components/HomePage/SinglePost.vue';
+import SinglePost from 'components/PostFeedPage/SinglePost.vue';
 import { PostModel } from 'components/models';
 
 export interface PostListProps {
