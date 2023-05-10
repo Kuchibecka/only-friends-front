@@ -11,10 +11,10 @@
 
 <script setup lang="ts">
 import NewPostField from 'components/HomePage/NewPostField.vue';
-import {Post} from 'components/models';
+import {PostModel} from 'components/models';
 import PostList from 'components/HomePage/PostList.vue';
 
-const posts: Post[] = [
+const posts: PostModel[] = [
   {
     id: 1,
     text: 'first post, new, just posted',

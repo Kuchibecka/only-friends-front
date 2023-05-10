@@ -70,13 +70,9 @@
   </div>
 </template>
 
-<script>
-import {defineComponent} from 'vue';
+<script setup lang="ts">
 import PageSelectorOption from 'components/LeftDrawer/PageSelectorOption.vue';
 
-export default defineComponent({
-  components: {PageSelectorOption}
-})
 </script>
 
 <style scoped></style>

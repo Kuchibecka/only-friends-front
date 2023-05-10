@@ -1,13 +1,4 @@
-export interface Todo {
-  id: number;
-  content: string;
-}
-
-export interface Meta {
-  totalCount: number;
-}
-
-export interface Post {
+export interface PostModel {
   id: number
   text: string;
   date: number;

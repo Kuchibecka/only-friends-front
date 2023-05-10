@@ -39,18 +39,15 @@
         />
       </div>
     </q-item-section>
-    <q-btn @click="log">
-      LOG!
-    </q-btn>
 </template>
 
 <script setup lang="ts">
-import {Post} from 'components/models';
+import {PostModel} from 'components/models';
 import {formatDistance} from 'date-fns';
 import {ref} from 'vue';
 
 export interface SinglePostProps {
-  post: Post
+  post: PostModel
 }
 const props = defineProps<SinglePostProps>();
 
@@ -62,20 +59,16 @@ function howLongAgo(date: number) {
   return formatDistance(date, new Date(), { addSuffix: true });
 }
 
-function deletePost(post: Post) {
+function deletePost(post: PostModel) {
   console.log('Deleting post', post, 'with id: ', post.id);
 
   // todo: delete post logic
 }
 
-function toggleLike(post: Post) {
+function toggleLike(post: PostModel) {
   post.liked = !post.liked;
   console.log('toggleLike() post is: ', post)
   // todo: edit post logic
-}
-
-function log() {
-  console.log('props IS: ', ppost)
 }
 </script>
 

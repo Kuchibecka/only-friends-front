@@ -34,11 +34,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Post } from 'components/models';
+import { PostModel } from 'components/models';
 
 let newPostText = ref('');
 function addNewPost() {
-  let newPost: Post = {
+  let newPost: PostModel = {
     text: newPostText.value,
     date: Date.now(),
     liked: false,

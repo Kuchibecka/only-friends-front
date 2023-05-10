@@ -22,10 +22,10 @@
 
 <script setup lang="ts">
 import SinglePost from 'components/HomePage/SinglePost.vue';
-import { Post } from 'components/models';
+import { PostModel } from 'components/models';
 
 export interface PostListProps {
-  posts: Post[];
+  posts: PostModel[];
 }
 
 const props = withDefaults(defineProps<PostListProps>(), {
