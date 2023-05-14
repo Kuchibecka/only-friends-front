@@ -2,7 +2,7 @@ import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
@@ -16,6 +16,9 @@ const routes: RouteRecordRaw[] = [
         name: 'Profile',
       },
     ],
+    meta: {
+      auth: true,
+    },
   },
   {
     path: '/auth',

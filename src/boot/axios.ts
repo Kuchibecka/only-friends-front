@@ -1,5 +1,6 @@
 import { boot } from 'quasar/wrappers';
 import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+import {logoutFunc} from "stores/AuthStore";
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -17,7 +18,7 @@ declare module '@vue/runtime-core' {
 const baseURL = 'http://localhost:8080/api';
 
 export const axiosConfig: AxiosRequestConfig = {
-  withCredentials: true,
+  // withCredentials: true,
   baseURL,
 };
 
@@ -39,6 +40,15 @@ $api.interceptors.request.use((config) => {
 
   config.headers['ngrok-skip-browser-warning'] = 'skip-browser-warning';
   config.timeout = timeout;
+
+  $api.interceptors.response.use((value) => {
+    return value;
+  }, (error) => {
+
+    if (error.response?.status === 401) logoutFunc();
+
+    throw error;
+  });
 
   return config;
 });

@@ -9,7 +9,7 @@ const options = [
   },
   {
     icon: 'feed',
-    redirect_to: '/',
+    redirect_to: '',
     text: 'News feed'
   },
   {

@@ -15,6 +15,7 @@ import {PostModel} from 'components/models';
 import PostList from "pages/PostFeedPage/PostList.vue";
 import {onMounted, ref} from "vue";
 import {usePostsStore} from "stores/PostStore";
+import {useAuthStore} from "stores/AuthStore";
 
 const postsStore = usePostsStore();
 onMounted(async () => {
@@ -23,6 +24,8 @@ onMounted(async () => {
 
 const getPosts = async () => {
   const posts = await postsStore.getPosts();
+  const authStore = useAuthStore();
+  console.log(authStore.state)
 
   if ('error' in posts) {
     console.warn('Error loading posts');

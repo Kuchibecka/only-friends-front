@@ -1,10 +1,10 @@
 <template>
   <q-card square class="shadow-24" style="width:300px;height:485px;">
     <q-card-section class="bg-primary">
-      <h4 class="text-h5 text-white q-my-md text-center">{{name}}</h4>
-<!--      <div class="absolute-bottom-right q-pr-md" style="transform: translateY(50%);">
-        <q-btn fab icon="add" color="secondary"/>
-      </div>-->
+      <h4 class="text-h5 text-white q-my-md text-center">{{ name }}</h4>
+      <!--      <div class="absolute-bottom-right q-pr-md" style="transform: translateY(50%);">
+              <q-btn fab icon="add" color="secondary"/>
+            </div>-->
     </q-card-section>
     <q-card-section>
       <q-form class="q-px-sm q-pt-xl">
@@ -37,7 +37,7 @@
 import {ref} from "vue";
 import DrawerTitle from "pages/LeftDrawer/DrawerTitle.vue";
 
-const name = 'Log in'
+const name = 'Login'
 const email = ref('');
 // const username = ref('');
 const password = ref('');
