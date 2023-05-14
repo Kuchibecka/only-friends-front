@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers';
-import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -14,7 +14,7 @@ declare module '@vue/runtime-core' {
 // "export default () => {}" function below (which runs individually
 // for each client)
 //todo: edit baseURL
-const baseURL = 'http://localhost:8080/api';
+const baseURL = '/api';
 
 export const axiosConfig: AxiosRequestConfig = {
   withCredentials: true,
