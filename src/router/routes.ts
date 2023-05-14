@@ -8,11 +8,11 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         component: () => import('pages/PostFeedPage.vue'),
-        name: 'Home'
+        name: 'News feed'
       },
       {
         path: '/profile',
-        component: () => import('pages/ProfilePage.vue'),
+        component: () => import('pages/ProfilePage/ProfilePage.vue'),
         name: 'Profile',
       },
     ],

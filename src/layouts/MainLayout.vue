@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import DrawerTitle from 'components/../pages/LeftDrawer/DrawerTitle.vue';
+import PageSelector from 'components/../pages/LeftDrawer/PageSelector.vue';
+import PageSelectorOption from "pages/LeftDrawer/PageSelectorOption.vue";
+
+const leftDrawerOpen = ref(false);
+const lorem =
+  'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque voluptatem totam, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo.';
+const slide = ref('style');
+
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+}
+</script>
+
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header bordered class="bg-white text-black">
@@ -12,6 +28,7 @@
             name="fa-solid fa-fan"
           />
         </q-toolbar-title>
+        <PageSelectorOption text="Log out" redirect-to="login" icon="logout"/>
       </q-toolbar>
     </q-header>
 
@@ -38,9 +55,13 @@
         <template v-slot:prepend>
           <q-icon name="search" />
         </template>
+        <div class="q-pt-lg text-weight-light">
+          *todo: my subscriptions*
+<!--      icon: name, tag    -->
+        </div>
       </q-input>
 
-      <q-carousel
+<!--      <q-carousel
         v-model="slide"
         transition-prev="scale"
         transition-next="scale"
@@ -117,7 +138,7 @@
           <q-icon name="search" size="56px" />
           <div class="q-mt-md text-center">{{ lorem }}</div>
         </q-carousel-slide>
-      </q-carousel>
+      </q-carousel>-->
     </q-drawer>
 
     <q-page-container>
@@ -125,18 +146,3 @@
     </q-page-container>
   </q-layout>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-import DrawerTitle from 'components/LeftDrawer/DrawerTitle.vue';
-import PageSelector from 'components/LeftDrawer/PageSelector.vue';
-
-const leftDrawerOpen = ref(false);
-const lorem =
-  'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque voluptatem totam, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo.';
-const slide = ref('style');
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
-</script>

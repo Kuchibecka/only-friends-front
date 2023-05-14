@@ -1,10 +1,10 @@
 <template>
   <q-card square class="shadow-24" style="width:300px;height:485px;">
-    <q-card-section class="bg-deep-purple-7">
-      <h4 class="text-h5 text-white q-my-md">{{name}}</h4>
-      <div class="absolute-bottom-right q-pr-md" style="transform: translateY(50%);">
-        <q-btn fab icon="add" color="purple-4"/>
-      </div>
+    <q-card-section class="bg-primary">
+      <h4 class="text-h5 text-white q-my-md text-center">{{name}}</h4>
+<!--      <div class="absolute-bottom-right q-pr-md" style="transform: translateY(50%);">
+        <q-btn fab icon="add" color="secondary"/>
+      </div>-->
     </q-card-section>
     <q-card-section>
       <q-form class="q-px-sm q-pt-xl">
@@ -20,32 +20,24 @@
         </q-input>
       </q-form>
     </q-card-section>
-    <!--          <q-card-section>
-                <div class="text-center q-pa-md q-gutter-md">
-                  <q-btn round color="indigo-7">
-                    <q-icon name="fab fa-facebook-f" size="1.2rem" />
-                  </q-btn>
-                  <q-btn round color="red-8">
-                    <q-icon name="fab fa-google-plus-g" size="1.2rem" />
-                  </q-btn>
-                  <q-btn round color="light-blue-5">
-                    <q-icon name="fab fa-twitter" size="1.2rem" />
-                  </q-btn>
-                </div>
-              </q-card-section>-->
     <q-card-actions class="q-px-lg">
-      <q-btn unelevated size="lg" color="purple-4" class="full-width text-white" label="Sign In"/>
+      <q-btn unelevated size="lg" color="secondary" class="full-width text-white" label="Sign In"/>
     </q-card-actions>
     <q-card-section class="text-center q-pa-sm">
-      <p class="text-grey-6">Forgot your password?</p>
+      <q-item clickable v-ripple exact :to="`/register`">
+        <q-item-section class="text-grey-8">
+          Not registered yet?
+        </q-item-section>
+      </q-item>
     </q-card-section>
   </q-card>
 </template>
 
 <script setup lang="ts">
 import {ref} from "vue";
+import DrawerTitle from "pages/LeftDrawer/DrawerTitle.vue";
 
-const name = 'Auth'
+const name = 'Log in'
 const email = ref('');
 // const username = ref('');
 const password = ref('');

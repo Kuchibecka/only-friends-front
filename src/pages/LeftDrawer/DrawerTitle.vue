@@ -1,6 +1,6 @@
 <template>
   <q-toolbar-title class="text-weight-bold">
-    <q-icon class="q-pa-sm" size="lg" color="primary" :name="`${props.icon}`" />
+    <q-icon class="q-pa-sm" size="lg" color="primary" :name="`${props.icon}`"/>
     {{ props.title }}
   </q-toolbar-title>
 </template>

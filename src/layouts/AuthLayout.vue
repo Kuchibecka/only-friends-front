@@ -3,23 +3,12 @@
     <q-page-container>
       <q-page
         class="window-height window-width row justify-center items-center"
-        style="background: linear-gradient(#8274c5, #5A4A9F);"
+        style="background: linear-gradient(white, var(--q-primary));"
       >
-        <!--    <div class="column q-pa-lg">
-              <div class="row">
-                <AuthComponent/>
-              </div>
-            </div>
-
-            <div class="column q-pa-lg">
-              <div class="row">
-                <RegistrationComponnet/>
-              </div>
-            </div>-->
 
         <div class="column q-pa-lg items-center">
-          <div class="row">
-            <h1>OnlyFriends</h1>
+          <div class="row q-pb-md">
+            <DrawerTitle :icon="'fa-solid fa-fan'" :title="'OnlyFriends'" />
           </div>
           <div class="row">
             <router-view/>
@@ -33,7 +22,8 @@
 
 <script setup lang="ts">
 
-const name = 'Login'
+import DrawerTitle from "pages/LeftDrawer/DrawerTitle.vue";
+
 // const email = ref('');
 // const username = ref('');
 // const password = ref('');

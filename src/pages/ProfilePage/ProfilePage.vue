@@ -1,36 +1,82 @@
 <template>
-  <q-page>
-    <NewPostField/>
-    <q-separator class="post-separator"/>
+  <div>
+    <div class="row q-pt-xl q-px-md q-pb-md items-center ">
+      <q-avatar size="220px">
+        <img src="https://cdn.quasar.dev/img/avatar2.jpg"/>
+      </q-avatar>
+      <div class="column q-pl-lg items-start">
+        <div class="nickname">
+          @{{ user.username }}
+        </div>
+        <div class="text-subtitle2 text-weight-light q-pt-sm">
+          {{ user.email }}
+        </div>
+        <div class="q-pt-lg text-weight-light">
+          *todo: subscribers (overlapping avatars)*
+<!--  https://quasar.dev/vue-components/avatar#example--overlapping-avatars        -->
+        </div>
+      </div>
+    </div>
 
-    <!--    <KeepAlive>-->
+    <q-separator class="post-separator"/>
     <PostList :posts="posts"/>
-    <!--    </KeepAlive>-->
-  </q-page>
+
+    <q-btn label="Edit Profile" @click="showEditProfileDialog = true"/>
+    <q-dialog v-model="showEditProfileDialog">
+      <q-card>
+        <q-card-section>
+          <h2>Edit Profile</h2>
+          <q-form @submit.prevent="updateProfile">
+            <q-input v-model="userData.username" label="Username"/>
+            <q-input v-model="userData.email" label="Email" type="email"/>
+
+            <q-btn type="submit" label="Save" :loading="loading"/>
+            <!--            <p v-if="error">{{ error.message }}</p>-->
+          </q-form>
+        </q-card-section>
+        <q-card-actions>
+          <q-btn label="Cancel" @click="showEditProfileDialog = false"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-page-scroller expand position="top" :scroll-offset="200" :offset="[0, 0]">
+      <div class="row cursor-pointer q-pa-sm scroller justify-between">
+        <div class="col-1">
+          <q-avatar class="q-ml-sm" size="70px">
+            <img src="https://cdn.quasar.dev/img/avatar2.jpg"/>
+          </q-avatar>
+        </div>
+        <div class="col-10">
+          <div class="nickname">
+            @{{user.username}}
+          </div>
+        </div>
+      </div>
+    </q-page-scroller>
+
+  </div>
 </template>
 
 <script setup lang="ts">
-import NewPostField from "pages/PostFeedPage/NewPostField.vue";
-import {PostModel} from 'components/models';
+import {ref} from 'vue'
 import PostList from "pages/PostFeedPage/PostList.vue";
-import {onMounted, ref} from "vue";
-import {usePostsStore} from "stores/PostStore";
+import {PostModel} from "components/models";
 
-const postsStore = usePostsStore();
-onMounted(async () => {
-  getPosts();
-});
+interface UserData {
+  username: string
+  email: string
+}
 
-const getPosts = async () => {
-  const posts = await postsStore.getPosts();
+interface User {
+  username: string
+  email: string
+}
 
-  if ('error' in posts) {
-    console.warn('Error loading posts');
-    return;
-  }
-
-};
-
+const name = 'Profile';
+const user = ref<User>({username: 'Adele', email: 'adele-One-Love@gmail.com'})
+const userData = ref<UserData>({username: 'adasd', email: '123@gmail.com'})
+const showEditProfileDialog = ref(false);
 const posts = ref<PostModel[]>([
   {
     id: 1,
@@ -194,7 +240,7 @@ const posts = ref<PostModel[]>([
   },
 ]);
 
-// const fetchDate = await fetch('/api/posts');
+
 </script>
 
 <style lang="sass">
@@ -204,4 +250,12 @@ const posts = ref<PostModel[]>([
   border-bottom: 1px solid
   border-color: $grey-4
   background: $blue-1
+.nickname
+    font-size: 3.75rem
+    line-height: 3.75rem
+    letter-spacing: -.00833em
+    font-weight: bold
+.scroller
+    background-color: #ffffff
+    flex: content
 </style>
