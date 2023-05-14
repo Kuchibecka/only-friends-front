@@ -97,10 +97,18 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: false, // opens browser window automatically
-      // host: 'localhost',
       liveReload: true,
-      proxy: 'http://localhost:8080/api'
+      open: false, // opens browser window automatically
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8080/api',
+          // target: 'https://2a11-46-39-55-196.ngrok-free.app/api',
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+        cors: false,
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
