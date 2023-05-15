@@ -27,7 +27,8 @@ export const useAuthStore = defineStore('authStore', () => {
       localStorage.setItem('user_id', meRes.id);
       localStorage.setItem('email', meRes.email);
       localStorage.setItem('nickname', meRes.nickname);
-      localStorage.setItem('profile_picture', meRes.profile_picture);
+      localStorage.setItem('profile_picture', meRes.profile_picture.id);
+      console.log("meRes: ", meRes);
       isAuth = true;
     }
 

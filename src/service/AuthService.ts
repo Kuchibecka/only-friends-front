@@ -15,7 +15,9 @@ export interface MeResponse {
   email: string,
   nickname: string,
   id: string,
-  profile_picture: string | null //todo: ???
+  profile_picture: {
+    "id": string
+  }
 }
 
 export const AuthService = {

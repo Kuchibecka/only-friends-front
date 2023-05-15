@@ -64,15 +64,12 @@ onMounted(async () => {
 
   if (props.post.author.profile_picture) {
     profileImg.value = await fetchImage(props.post.author.profile_picture.id);
-    console.log("profileImg: ", profileImg);
-    console.log("profileImg.value: ", profileImg.value);
   }
 });
 
 let ppost = ref(props.post)
 
 const fetchImage = async (fileId: string) => {
-  console.log("fileId: ", fileId);
   try {
     const response = await $api.get('/files/' + fileId, {
       responseType: 'arraybuffer',

@@ -2,7 +2,7 @@
   <div>
     <div class="row q-pt-xl q-px-md q-pb-md items-center ">
       <q-avatar size="220px">
-        <img src="https://cdn.quasar.dev/img/avatar2.jpg"/>
+        <q-img :src="profileImg"/>
       </q-avatar>
       <div class="column q-pl-lg items-start">
         <div class="nickname">
@@ -21,7 +21,7 @@
     <q-separator class="post-separator"/>
     <PostList :posts="posts"/>
 
-    <q-btn label="Edit Profile" @click="showEditProfileDialog = true"/>
+<!--    <q-btn label="Edit Profile" @click="showEditProfileDialog = true"/>
     <q-dialog v-model="showEditProfileDialog">
       <q-card>
         <q-card-section>
@@ -31,20 +31,20 @@
             <q-input v-model="userData.email" label="Email" type="email"/>
 
             <q-btn type="submit" label="Save" :loading="loading"/>
-            <!--            <p v-if="error">{{ error.message }}</p>-->
+            &lt;!&ndash;            <p v-if="error">{{ error.message }}</p>&ndash;&gt;
           </q-form>
         </q-card-section>
         <q-card-actions>
           <q-btn label="Cancel" @click="showEditProfileDialog = false"/>
         </q-card-actions>
       </q-card>
-    </q-dialog>
+    </q-dialog>-->
 
     <q-page-scroller expand position="top" :scroll-offset="200" :offset="[0, 0]">
       <div class="row cursor-pointer q-pa-sm scroller justify-between">
         <div class="col-1">
           <q-avatar class="q-ml-sm" size="70px">
-            <img src="https://cdn.quasar.dev/img/avatar2.jpg"/>
+            <q-img :src="profileImg"/>
           </q-avatar>
         </div>
         <div class="col-10">
@@ -64,6 +64,7 @@ import PostList from "pages/PostFeedPage/PostList.vue";
 import {PostModel} from "components/models";
 import {usePostsStore} from "stores/PostStore";
 import {MeResponse} from "src/service/AuthService";
+import {$api} from "boot/axios";
 
 interface UserData {
   username: string
@@ -76,28 +77,47 @@ interface User {
 }
 
 const name = 'Profile';
-const user = ref<User>({username: 'Adele', email: 'adele-One-Love@gmail.com'})
-const userData = ref<UserData>({username: 'adasd', email: '123@gmail.com'})
-const showEditProfileDialog = ref(false);
+// const user = ref<User>({username: 'Adele', email: 'adele-One-Love@gmail.com'})
+// const userData = ref<UserData>({username: 'adasd', email: '123@gmail.com'})
+// const showEditProfileDialog = ref(false);
 let posts = ref<PostModel[]>();
 const postsStore = usePostsStore();
-const profileInfo: MeResponse = {
+const profileInfo = {
   email: localStorage.getItem('email') as string,
   nickname: localStorage.getItem('nickname') as string,
   id: localStorage.getItem('user_id') as string,
   profile_picture: localStorage.getItem('profile_picture') as string
 }
+const profileImg = ref<string>('');
+
+const fetchImage = async (fileId: string) => {
+  try {
+    const response = await $api.get('/files/' + fileId, {
+      responseType: 'arraybuffer',
+    })
+    const base64 = btoa(
+      new Uint8Array(response.data).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ''
+      )
+    )
+
+    return `data:image/png;base64,${base64}`;
+
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 onMounted( async () => {
   posts.value = await getProfilePosts();
-  console.log(profileInfo.email)
+  // profileImg.value = await fetchImage(userData.value);
+  profileImg.value = await fetchImage(<string> profileInfo.profile_picture);
 })
 
 const getProfilePosts = async () => {
   // const posts = await postsStore.getUserPosts(<string>localStorage.getItem('user_id'));
   const posts = await postsStore.getUserPosts("1");
-  console.log(posts);
-  console.log(JSON.parse(<string> localStorage.getItem('posts')));
   return JSON.parse(<string> localStorage.getItem('posts'));
 };
 
