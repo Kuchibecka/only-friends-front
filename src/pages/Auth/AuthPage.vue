@@ -11,7 +11,7 @@
         class="q-px-sm q-pt-xl"
         @submit="onSubmit"
       >
-        <q-input square clearable v-model="email" type="email" label="Email">
+        <q-input square clearable v-model="email" type="text" label="Email">
           <template v-slot:prepend>
             <q-icon name="email"/>
           </template>

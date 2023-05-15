@@ -6,10 +6,10 @@
       </q-avatar>
       <div class="column q-pl-lg items-start">
         <div class="nickname">
-          @{{ user.username }}
+          @{{ profileInfo.nickname }}
         </div>
         <div class="text-subtitle2 text-weight-light q-pt-sm">
-          {{ user.email }}
+          {{ profileInfo.email }}
         </div>
         <div class="q-pt-lg text-weight-light">
           *todo: subscribers (overlapping avatars)*
@@ -49,7 +49,7 @@
         </div>
         <div class="col-10">
           <div class="nickname">
-            @{{user.username}}
+            @{{profileInfo.nickname}}
           </div>
         </div>
       </div>
@@ -59,9 +59,11 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import PostList from "pages/PostFeedPage/PostList.vue";
 import {PostModel} from "components/models";
+import {usePostsStore} from "stores/PostStore";
+import {MeResponse} from "src/service/AuthService";
 
 interface UserData {
   username: string
@@ -77,7 +79,7 @@ const name = 'Profile';
 const user = ref<User>({username: 'Adele', email: 'adele-One-Love@gmail.com'})
 const userData = ref<UserData>({username: 'adasd', email: '123@gmail.com'})
 const showEditProfileDialog = ref(false);
-const posts = ref<PostModel[]>([
+let posts = ref<PostModel[]>(/*[
   {
     id: 1,
     text: 'first post, new, just posted',
@@ -238,7 +240,27 @@ const posts = ref<PostModel[]>([
     author_tag: 'hgg',
     liked: false
   },
-]);
+]*/);
+const postsStore = usePostsStore();
+const profileInfo: MeResponse = {
+  email: localStorage.getItem('email') as string,
+  nickname: localStorage.getItem('nickname') as string,
+  id: localStorage.getItem('user_id') as string,
+  profile_picture: localStorage.getItem('profile_picture') as string
+}
+
+onMounted( async () => {
+  posts.value = await getProfilePosts();
+  console.log(profileInfo.email)
+})
+
+const getProfilePosts = async () => {
+  // const posts = await postsStore.getUserPosts(<string>localStorage.getItem('user_id'));
+  const posts = await postsStore.getUserPosts("1");
+  console.log(posts);
+  console.log(JSON.parse(<string> localStorage.getItem('posts')));
+  return JSON.parse(<string> localStorage.getItem('posts'));
+};
 
 
 </script>

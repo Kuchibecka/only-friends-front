@@ -17,6 +17,16 @@ export const PostsService = {
     }
   },
 
+  async getUserPosts(user_id: string) {
+    try {
+      // const { data } = await $api.get<PostModel[]>('/users/' + user_id + '/posts?page=0&page_size=20');
+      const { data } = await $api.get<PostModel[]>('/users/' + user_id + '/posts?page=0&page_size=20');
+      return data;
+    } catch (e: unknown) {
+      return { error: e };
+    }
+  },
+
   async newPost(postData: PostData) {
     try {
       const { data } = await $api.post<PostModel>('/newPost', postData); //todo: edit url

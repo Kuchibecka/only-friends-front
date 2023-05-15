@@ -28,8 +28,10 @@ const props = defineProps({
 });
 
 const onClick = () => {
-  authStore.logout();
-  Router.push({path: '/login'});
+  if (<string> props.redirectTo === "/signin") {
+    authStore.logout();
+  }
+  Router.push({path: <string> props.redirectTo});
 }
 </script>
 

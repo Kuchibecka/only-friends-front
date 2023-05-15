@@ -11,10 +11,27 @@ export interface SignupResponse {
   message: string
 }
 
+export interface MeResponse {
+  email: string,
+  nickname: string,
+  id: string,
+  profile_picture: string | null //todo: ???
+}
+
 export const AuthService = {
   async login(creds: LoginData) {
     try {
       const {data} = await $api.post<LoginResponse>('/login', creds);
+
+      return data;
+    } catch (e: unknown) {
+      return {error: e};
+    }
+  },
+
+  async me() {
+    try {
+      const {data} = await $api.get<MeResponse>('/me');
 
       return data;
     } catch (e: unknown) {

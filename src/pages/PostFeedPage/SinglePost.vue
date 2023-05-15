@@ -7,13 +7,13 @@
   <q-item-section>
     <q-item-label class="text-subtitle1">
       <strong>
-        {{ ppost.author_name }}
+        {{ ppost.author.email }}
       </strong>
       <span class="text-grey-7 q-ml-xs">
-        {{ "@" + ppost.author_tag }}
+        {{ "@" + ppost.author.nickname }}
       </span>
       <br class="lt-md"/>
-      &bull; {{ howLongAgo(ppost.date) }}
+      &bull; {{ howLongAgo(ppost.createdAt) }}
     </q-item-label>
     <q-item-label class="post-text text-body1 q-pt-xs">
       {{ ppost.text }}
@@ -43,8 +43,8 @@
 
 <script setup lang="ts">
 import {PostModel} from 'components/models';
-import {formatDistance} from 'date-fns';
-import {ref} from 'vue';
+import {formatDistance, formatDistanceToNow} from 'date-fns';
+import {onMounted, ref} from 'vue';
 
 export interface SinglePostProps {
   post: PostModel
@@ -54,10 +54,10 @@ const props = defineProps<SinglePostProps>();
 
 let ppost = ref(props.post)
 
-function howLongAgo(date: number) {
+function howLongAgo(date: string) {
   // docs: https://date-fns.org/v2.29.3/docs/Getting-Started
   // console.log('props IS: ', ppost)
-  return formatDistance(date, new Date(), {addSuffix: true});
+  return formatDistanceToNow(Date.parse(date));
 }
 
 function deletePost(post: PostModel) {
@@ -67,7 +67,7 @@ function deletePost(post: PostModel) {
 }
 
 function toggleLike(post: PostModel) {
-  post.liked = !post.liked;
+  // post.liked = !post.liked;
   console.log('toggleLike() post is: ', post)
   // todo: edit post logic
 }

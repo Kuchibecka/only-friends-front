@@ -23,6 +23,11 @@ export const useAuthStore = defineStore('authStore', () => {
       isAuth = false;
     } else {
       localStorage.setItem('access_token', res.token);
+      const meRes = await AuthService.me();
+      localStorage.setItem('user_id', meRes.id);
+      localStorage.setItem('email', meRes.email);
+      localStorage.setItem('nickname', meRes.nickname);
+      localStorage.setItem('profile_picture', meRes.profile_picture);
       isAuth = true;
     }
 
@@ -39,6 +44,7 @@ export const useAuthStore = defineStore('authStore', () => {
     const res = await AuthService.signup(creds);
     isAuth = !('error' in res);
     localStorage.setItem('access_token', res.token);
+    localStorage.setItem('user_id', res.id);
 
     return res;
   };

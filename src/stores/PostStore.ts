@@ -17,11 +17,24 @@ export const usePostsStore = defineStore('postsStore', () => {
     } else {
       getPostsState.value = 'success';
 
-      postList.value = res;
+      // postList.value = res;
     }
 
     return res;
   }
+
+  const getUserPosts = async (user_id: string) => {
+    const res = await PostsService.getUserPosts(user_id);
+    if ('error' in res) {
+      localStorage.setItem('posts', "error")
+    } else {
+      getPostsState.value = 'success';
+
+      // postList.value = res;
+      localStorage.setItem('posts', JSON.stringify(res));
+    }
+    return res;
+  };
 
   const newPost = async (postData) => {
     getPostsState.value = 'loading';
@@ -56,6 +69,7 @@ export const usePostsStore = defineStore('postsStore', () => {
   return {
     getPostsState,
     getPosts,
-    newPost
+    newPost,
+    getUserPosts
   };
 });
