@@ -1,7 +1,8 @@
 <template>
   <q-item-section avatar top>
     <q-avatar size="xl">
-      <img src="https://cdn.quasar.dev/img/avatar2.jpg"/>
+      <q-img v-if="profileImg" :src="profileImg" alt="/src/assets/image_not_supported.png"/>
+      <q-img v-else src="/src/assets/image_not_supported.png"/>
     </q-avatar>
   </q-item-section>
   <q-item-section>
@@ -18,7 +19,7 @@
     <q-item-label class="post-text text-body1 q-pt-xs">
       {{ ppost.text }}
     </q-item-label>
-    <img :src="imageUrl" alt="Image" />
+    <q-img v-for="img in imageUrl" v-bind:key="img" :src="img" alt="Image" />
     <div class="row justify-between q-mt-md">
       <q-btn
         @click="toggleLike(ppost)"
@@ -44,29 +45,36 @@
 
 <script setup lang="ts">
 import {PostModel} from 'components/models';
-import {formatDistance, formatDistanceToNow} from 'date-fns';
+import {formatDistanceToNow} from 'date-fns';
 import {onMounted, ref} from 'vue';
-import axios from "axios";
-import {$api} from "boot/axios";
+import {$api} from 'boot/axios';
 
 export interface SinglePostProps {
   post: PostModel
 }
 
 const props = defineProps<SinglePostProps>();
-const imageUrl = ref<string>('')
+const imageUrl = ref<string[]>([]);
+const profileImg = ref<string>('');
 
-onMounted(() => {
-  if (props.post.files.length != 0) {
-    fetchImage();
+onMounted(async () => {
+  for (let fileIndex in props.post.files) {
+    imageUrl.value.push(<string> await fetchImage(props.post.files[fileIndex].id));
+  }
+
+  if (props.post.author.profile_picture) {
+    profileImg.value = await fetchImage(props.post.author.profile_picture.id);
+    console.log("profileImg: ", profileImg);
+    console.log("profileImg.value: ", profileImg.value);
   }
 });
 
 let ppost = ref(props.post)
 
-const fetchImage = async () => {
+const fetchImage = async (fileId: string) => {
+  console.log("fileId: ", fileId);
   try {
-    const response = await $api.get('/files/9', {
+    const response = await $api.get('/files/' + fileId, {
       responseType: 'arraybuffer',
     })
     const base64 = btoa(
@@ -75,7 +83,9 @@ const fetchImage = async () => {
         ''
       )
     )
-    imageUrl.value = `data:image/png;base64,${base64}`
+
+    return `data:image/png;base64,${base64}`;
+
   } catch (error) {
     console.error(error)
   }
@@ -83,7 +93,6 @@ const fetchImage = async () => {
 
 function howLongAgo(date: string) {
   // docs: https://date-fns.org/v2.29.3/docs/Getting-Started
-  // console.log('props IS: ', ppost)
   return formatDistanceToNow(Date.parse(date));
 }
 
