@@ -6,7 +6,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: '',
+        path: 'feed',
         component: () => import('pages/PostFeedPage.vue'),
         name: 'News feed'
       },
