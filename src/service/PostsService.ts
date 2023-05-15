@@ -19,7 +19,7 @@ export const PostsService = {
 
   async newPost(postData: PostData) {
     try {
-      const { data } = await $api.post<PostResponse>('/newPost', postData); //todo: edit url
+      const { data } = await $api.post<PostModel>('/newPost', postData); //todo: edit url
       return data;
     } catch (e: unknown) {
       return {error: e};

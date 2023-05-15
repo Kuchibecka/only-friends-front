@@ -58,7 +58,8 @@
 import {ref} from "vue";
 import {useAuthStore} from "stores/AuthStore";
 import {SignupData} from "src/model/loginData";
-import router from "src/router";
+import router, {Router} from "src/router";
+import {useQuasar} from "quasar";
 
 const name = 'Register'
 const email = ref('');
@@ -66,30 +67,32 @@ const nickname = ref('');
 const password = ref('');
 
 const authStore = useAuthStore();
+const $q = useQuasar();
 
 const onSubmit = () => {
   const signupData: SignupData = {
     email: email.value as string,
     password: password.value as string,
     nickname: nickname.value as string
-  }
+  };
   console.log('signupData: ', signupData);
-  /*const routerr = router()
-  console.log(routerr)
-  console.log(routerr.currentRoute)
-  routerr.push('/')*/
-  // routerr.go()
 
-
-  /*const response = authStore.signup(signupData)
-    .then( () => {
-        console.log(response);
-        console.log(authStore.isAuth);
-        console.log(authStore.checkAuth());
-        console.log(authStore.state);
-        this.$router.push({name: ''})
-    });*/
-}
+  const response = authStore.signup(signupData)
+    .then( (res) => {
+      if ('error' in res) {
+        console.log("res: ", res);
+        $q.notify({
+          color: 'red-5',
+          textColor: 'white',
+          icon: 'warning',
+          message: res.error.response.data.message
+        });
+        authStore.logout();
+      } else {
+        Router.push({path: '/'});
+      }
+    });
+};
 
 </script>
 
