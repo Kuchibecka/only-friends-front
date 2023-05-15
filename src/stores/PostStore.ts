@@ -9,14 +9,16 @@ export const usePostsStore = defineStore('postsStore', () => {
 
   const postList = ref<PostModel[]>();
 
-  const getPosts = async () => {
+  const getFeedPosts = async () => {
     getPostsState.value = 'loading';
-    const res = await PostsService.getPosts();
+    const res = await PostsService.getFeedPosts();
     if ('error' in res) {
       getPostsState.value = 'error';
+      localStorage.setItem('post_feed', "error")
     } else {
       getPostsState.value = 'success';
 
+      localStorage.setItem('post_feed', JSON.stringify(res));
       // postList.value = res;
     }
 
@@ -68,7 +70,7 @@ export const usePostsStore = defineStore('postsStore', () => {
 
   return {
     getPostsState,
-    getPosts,
+    getFeedPosts,
     newPost,
     getUserPosts
   };

@@ -7,10 +7,10 @@ export interface PostResponse {
 }
 
 export const PostsService = {
-  async getPosts() {
+  async getFeedPosts() {
     try {
       //todo: ??? base url is wrong
-      const { data } = await $api.get<PostModel[]>('/posts'); //todo: edit url
+      const { data } = await $api.get<PostModel[]>('/me/subscriptions/posts?page=0&page_size=20');
       return data;
     } catch (e: unknown) {
       return {error: e};
