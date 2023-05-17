@@ -55,10 +55,10 @@ function toggleLeftDrawer() {
         <template v-slot:prepend>
           <q-icon name="search" />
         </template>
-        <div class="q-pt-lg text-weight-light">
+<!--        <div class="q-pt-lg text-weight-light">
           *todo: my subscriptions*
-<!--      icon: name, tag    -->
-        </div>
+&lt;!&ndash;      icon: name, tag    &ndash;&gt;
+        </div>-->
       </q-input>
 
 <!--      <q-carousel

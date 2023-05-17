@@ -11,10 +11,10 @@
         <div class="text-subtitle2 text-weight-light q-pt-sm">
           {{ profileInfo.email }}
         </div>
-        <div class="q-pt-lg text-weight-light">
+<!--        <div class="q-pt-lg text-weight-light">
           *todo: subscribers (overlapping avatars)*
-<!--  https://quasar.dev/vue-components/avatar#example--overlapping-avatars        -->
-        </div>
+&lt;!&ndash;  https://quasar.dev/vue-components/avatar#example&#45;&#45;overlapping-avatars        &ndash;&gt;
+        </div>-->
       </div>
     </div>
 

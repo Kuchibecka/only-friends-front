@@ -13,6 +13,7 @@
         <!--    todo: whatis :dense="dense" param    -->
         <template v-slot:before>
           <q-avatar size="xl">
+<!--  todo: fix new post form image          -->
             <img src="https://cdn.quasar.dev/img/avatar5.jpg" />
           </q-avatar>
         </template>
